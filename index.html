@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0b0b1e" />
+  <meta name="description" content="Link na Bio em formato de minijogo! Jogue, bata seu recorde e acesse todos os meus links." />
+  <title>Flappy Link 🔗 | Link na Bio</title>
+  <link rel="icon" href="avatar-normal.png" />
+  <!-- Fonte pixel (estilo Flash/jogos antigos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Container centralizado (desktop) e tela cheia (mobile) -->
+  <main class="game-wrapper">
+
+    <!-- HUD de pontuação -->
+    <div class="hud">
+      <div class="hud-score">
+        <span class="hud-label">SCORE</span>
+        <span id="score">0</span>
+      </div>
+      <div class="hud-best">
+        <span class="hud-label">RECORDE</span>
+        <span id="best">0</span>
+      </div>
+      <button id="btn-mute" class="btn-mute" title="Ligar/desligar música" aria-label="Som">🔊</button>
+    </div>
+
+    <!-- Canvas do jogo -->
+    <div class="canvas-container">
+      <canvas id="game" width="360" height="640" aria-label="Jogo estilo Flappy Bird"></canvas>
+
+      <!-- Overlay: Tela inicial -->
+      <div id="overlay-start" class="overlay visible">
+        <img src="avatar-normal.png" alt="Avatar" class="overlay-avatar" />
+        <h1 class="game-title">FLAPPY<span>LINK</span></h1>
+        <input id="player-name" class="name-input" maxlength="14" placeholder="SEU NOME" autocomplete="off" spellcheck="false" />
+        <p class="overlay-sub" id="control-hint">Toque na tela para voar 🚀</p>
+        <p class="flash-tagline">★ MELHOR JOGO DA INTERNET ★</p>
+        <button id="btn-start" class="btn btn-primary">▶ JOGAR</button>
+      </div>
+
+      <!-- Overlay: Tela preta da história (aparece após clicar em JOGAR) -->
+      <div id="overlay-story" class="overlay story-black">
+        <p id="story-text" class="story-text"></p>
+        <p id="story-prompt" class="story-prompt hidden"></p>
+      </div>
+
+      <!-- Overlay: Game Over + Links da bio -->
+      <div id="overlay-gameover" class="overlay">
+        <!-- Rosto triste GIGANTE de fundo -->
+        <div class="sad-bg" aria-hidden="true">
+          <img src="avatar-sad.png" alt="" />
+        </div>
+        <div class="gameover-card">
+          <img src="avatar-sad.png" alt="Avatar triste" class="overlay-avatar sad" id="gameover-avatar" />
+          <h2 class="gameover-title">GAME OVER 😢</h2>
+          <!-- ===== DIV 1: PONTUAÇÃO ===== -->
+          <div id="panel-score" class="panel-col">
+            <h3 class="col-title">📊 PONTUAÇÃO</h3>
+            <div class="final-score">
+              <div><span class="final-label">Score</span><span id="final-score">0</span></div>
+              <div><span class="final-label">Recorde</span><span id="final-best">0</span></div>
+            </div>
+            <p id="final-name" class="final-name"></p>
+            <p id="new-record" class="new-record hidden">🏆 NOVO RECORDE!</p>
+
+            <h3 class="col-title">🏆 RANKING GERAL</h3>
+            <ol id="rank-list" class="rank-list">
+              <li class="rank-item"><span class="r-name">carregando...</span></li>
+            </ol>
+          </div>
+
+          <!-- ===== DIV 2: REDES ===== -->
+          <div id="panel-links" class="panel-col">
+            <h3 class="col-title">🔗 REDES</h3>
+            <nav class="bio-links" aria-label="Meus links">
+              <a class="bio-link github" href="https://github.com/repoILP?tab=repositories" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+                <span>GitHub</span>
+              </a>
+              <a class="bio-link discord" href="https://discord.com/users/1291953072045559809" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.2.4c1.8.4 2.6 1 3.5 1.7A16.2 16.2 0 0 0 12 3.8c-2.4 0-4.5.5-6.7 1.3.9-.7 1.9-1.4 3.5-1.7L8.6 3a19.8 19.8 0 0 0-4.9 1.5C1.6 8.6 1 12.6 1.3 16.6c1.9 1.4 3.7 2.2 5.5 2.8l.9-1.5c-.9-.3-1.8-.8-2.6-1.4l.6-.5c1.8.8 3.9 1.3 6.3 1.3s4.5-.5 6.3-1.3l.6.5c-.8.6-1.7 1.1-2.6 1.4l.9 1.5c1.8-.6 3.6-1.4 5.5-2.8.4-4.7-.7-8.7-2.4-12.2M8.7 14.2c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2m6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2"/></svg>
+                <span>Discord</span>
+              </a>
+              <p class="bio-caption">💬 BORA CODAR JUNTOS!</p>
+            </nav>
+          </div>
+
+          <button id="btn-restart" class="btn btn-primary btn-restart">🔄 JOGAR NOVAMENTE</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-note">© 2005-2026 Flappy Link™ — Feito com 💙 | Visitante nº <span id="hit-counter">000001</span></p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
